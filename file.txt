@@ -1,0 +1,9 @@
+A=baaaaa
+b=bbbbbb
+c=zccccccccc
+d=dddddd
+e=eeeeeeeeee
+word=meaning
+Word=Meaning
+Word=meaning
+aord=meaning
