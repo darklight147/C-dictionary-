@@ -1,8 +1,8 @@
-A=baaaaa
-b=bbbbbb
-c=zccccccccc
-d=dddddd
-e=eeeeeeeeee
+Aalah=baaaaa
+balah=bbbbbb
+calah=zccccccccc
+dalah=dddddd
+ealah=eeeeeeeeee
 word=meaning
 Word=Meaning
 Word=meaning

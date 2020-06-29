@@ -69,37 +69,43 @@ char get_first_char(char *str)
     return tolower(str[0]);
 }
 
-void ajoute(struct Blob* tete, char *data, int isMeaning) {
+struct Blob *ajoute(struct Blob *tete, char *pch, char *pch1)
+{
     struct Blob *New = (struct Blob *)malloc(sizeof(struct Blob));
 
-    if (isMeaning)
+    New->word = pch1;
+    New->meaning = pch;
+
+
+    New->next = tete;
+
+    tete = New;
+
+    return tete;
+}
+void afficher(struct Blob *tete)
+{
+    struct Blob *p = tete;
+    int i = 0;
+    while (p != NULL)
     {
-        // New->meaning = data;
-        New->meaning = (char*) malloc(64);
-        strcpy(New->meaning, data);
-        puts(New->meaning);
+        i++;
+        printf("la lettre: %c = %s\n\n", get_first_char(p->word), p->meaning);
+        p = p->next;
+        printf("total de %d mots\n", i);
     }
-    else {
-        New->word = (char*) malloc(64);
-        strcpy(New->word, data);
-        // printf("%s \n", New->word);
-        puts(New->word);
-    }
-    if (tete == NULL)
-    {
-        New->next = NULL;
-        tete = New;
-    } else {
-        New->next =  NULL;
-        tete->next = New;
-    }
+    // printf("\n\n");
 }
 
 int main()
 {
-
+    int i;
     struct Blob *T[25];
-    // pour savoir la position de chaque list chainé
+    for (i = 0; i <= 25; i++)
+    {
+        T[i] = NULL;
+    }
+    // pour savoir la position de chaque list chain�
 
     FILE *fp;
     char ch[100] = "";
@@ -111,7 +117,7 @@ int main()
         exit(EXIT_FAILURE);
     }
     char *token;
-    char *pch;
+    char *pch, *pch1;
     char cc;
     char *content = get_line(fp);
     int isMeaning = 0;
@@ -122,38 +128,34 @@ int main()
     char z;
     while (pch != NULL)
     {
-        // printf("%s", pch);
+
         // printf("%s\n", pch);
-        // printf("%s\n is a %s\n", pch, isMeaning ? "meaning" : "word");
-        // printf("%s and its a %s\n", pch, isMeaning ? "meaning" : "word");
-        // printf("-----%c--------\n", get_first_char(pch));
-        cc = get_first_char(pch);
-        if ((y % 2) == 0)
-        {
-            z = cc;
-        }
-        T[(int)z - ASCII] = (struct Blob *)malloc(sizeof(struct Blob));
-        ajoute(T[(int)z - ASCII], pch, isMeaning);
-        // printf("%s\n", );
+        // printf(" %s is a word\n", pch);
+        // printf("%c\n", cc);
 
-        // if (isMeaning)
-        // {
-        //     printf("%s \n",  T[(int)z - ASCII]->meaning);
-        // } else {
-        //     printf("%s \n",  T[(int)z - ASCII]->word);
-        // }
-        puts((char *) T[(int)z - ASCII]->word);
+        z = get_first_char(pch);
+        pch1 = pch;
+        // printf(" pch1 : %s \n", pch1);
 
-        
-        // printf("%s",  T[(int)z - ASCII]->next);
-        
-
-        
-        //reset
-        isMeaning = !isMeaning;
         pch = strtok(NULL, "=\n");
+        // printf(" pch : %s  \n", pch);
+        // printf(" %s is a meaning \n", pch);
+        if (y % 2 == 0)
+        {
+            T[(int)z - ASCII] = ajoute(T[(int)z - ASCII], pch, pch1);
+        }
+        
+
+        afficher(T[(int)z - ASCII]);
+        pch = strtok(NULL, " =\n");
         y++;
     }
+
+    for (i = 0; i < 25; i++)
+    {
+        afficher(T[i]);
+    }
+    
     // printf("%d", y);
 
     fclose(fp);
